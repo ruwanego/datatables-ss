@@ -61,6 +61,9 @@ public class ServerSideDataTable {
 
     private String getDefinedColumnNames() {
         List<String> names = new ArrayList<String>();
+        if (idColumnName != null) {
+            names.add(idColumnName);
+        }
         for (Column column : columns) {
             names.add(column.getName());
         }

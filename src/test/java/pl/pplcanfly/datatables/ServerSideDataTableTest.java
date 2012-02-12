@@ -96,12 +96,13 @@ public class ServerSideDataTableTest {
     public void should_throw_eception_if_column_was_not_found() {
         // given
         ServerSideDataTable dataTable = ServerSideDataTable.build()
+                .idColumn("id")
                 .column(null, "col1")
                 .column(null, "col2")
                 .done();
 
         thrown.expect(ColumnNotFoundException.class);
-        thrown.expectMessage("idontexist, defined columns = [col1, col2]");
+        thrown.expectMessage("idontexist, defined columns = [id, col1, col2]");
 
         // when
         dataTable.getColumns(Arrays.asList("idontexist"));
