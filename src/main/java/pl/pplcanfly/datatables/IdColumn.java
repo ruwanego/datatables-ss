@@ -10,7 +10,7 @@ class IdColumn extends Column {
     }
 
     @Override
-    public Object getValueFrom(Object row) {
+    public Object getDisplayValueFrom(Object row) {
         return displayStart++;
     }
 

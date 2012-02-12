@@ -12,11 +12,11 @@ public class IdColumnTest {
         Column idCol = new IdColumn("id", 10);
 
         // when/then
-        assertThat(idCol.getValueFrom(null)).isEqualTo(10L);
-        assertThat(idCol.getValueFrom(null)).isEqualTo(11L);
-        assertThat(idCol.getValueFrom(null)).isEqualTo(12L);
-        assertThat(idCol.getValueFrom(null)).isEqualTo(13L);
-        assertThat(idCol.getValueFrom(null)).isEqualTo(14L);
+        assertThat(idCol.getDisplayValueFrom(null)).isEqualTo(10L);
+        assertThat(idCol.getDisplayValueFrom(null)).isEqualTo(11L);
+        assertThat(idCol.getDisplayValueFrom(null)).isEqualTo(12L);
+        assertThat(idCol.getDisplayValueFrom(null)).isEqualTo(13L);
+        assertThat(idCol.getDisplayValueFrom(null)).isEqualTo(14L);
     }
 
 }

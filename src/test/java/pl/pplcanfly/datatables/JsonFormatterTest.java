@@ -4,6 +4,7 @@ import static org.fest.assertions.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.stub;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +63,7 @@ public class JsonFormatterTest {
     }
 
     @Test
-    public void should_use_display_value_for_generating_column_content() {
+    public void should_use_string_representation_for_generating_column_content() {
         // given
         RequestParams requestParams = mock(RequestParams.class);
         stub(requestParams.getEcho()).toReturn(3);
@@ -82,6 +83,30 @@ public class JsonFormatterTest {
                 "\"iTotalRecords\":20," +
                 "\"iTotalDisplayRecords\":10," +
                 "\"aaData\":[[\"Thu Jan 01 01:00:00 CET 1970\"]]}");
+    }
+
+    @Test
+    public void should_use_display_formatter_for_generating_column_content() {
+        // given
+        RequestParams requestParams = mock(RequestParams.class);
+        stub(requestParams.getEcho()).toReturn(3);
+
+        List<FooDate> rowsToShow = Arrays.asList(new FooDate(new Date(451672500000L)));
+
+        int totalRows = 20;
+        int displayRows = 10;
+
+        JsonFormatter formatter = new JsonFormatter(Arrays.asList(new Column(Types.date(), "date",
+                new DateConverter())), requestParams);
+
+        // when
+        String json = formatter.format(rowsToShow, totalRows, displayRows);
+
+        // then
+        assertThat(json).isEqualTo("{\"sEcho\":3," +
+                "\"iTotalRecords\":20," +
+                "\"iTotalDisplayRecords\":10," +
+                "\"aaData\":[[\"1984-04-24\"]]}");
     }
 
     @Test
@@ -117,6 +142,14 @@ class FooDate {
 
     public Date getDate() {
         return date;
+    }
+}
+
+class DateConverter implements DisplayConverter {
+
+    @Override
+    public String convert(Object value) {
+        return new SimpleDateFormat("yyyy-MM-dd").format((Date) value);
     }
 
 }

@@ -26,7 +26,7 @@ class JsonFormatter implements Formatter {
         for (Object row : rows) {
             List<Object> values = new ArrayList<Object>();
             for(Column column : columns) {
-                Object columnValue = column.getValueFrom(row);
+                Object columnValue = column.getDisplayValueFrom(row);
                 values.add(columnValue != null ? columnValue.toString() : "");
             }
             jsonArray.element(values);

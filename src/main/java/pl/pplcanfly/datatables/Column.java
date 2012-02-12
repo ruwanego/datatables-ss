@@ -8,9 +8,15 @@ class Column {
     private Type type;
     private String name;
     private ValueAccessor valueAccessor;
+    private DisplayConverter formatter;
 
     public Column(Type type, String name) {
         this(type, name, new ReflectionValueAccessor(name));
+    }
+
+    public Column(Type type, String name, DisplayConverter formatter) {
+        this(type, name, new ReflectionValueAccessor(name));
+        this.formatter = formatter;
     }
 
     public Column(Type type, String name, ValueAccessor valueAccessor) {
@@ -25,6 +31,13 @@ class Column {
 
     public String getName() {
         return name;
+    }
+
+    public Object getDisplayValueFrom(Object row) {
+        if (formatter != null) {
+            return formatter.convert(valueAccessor.getValueFrom(row));
+        }
+        return valueAccessor.getValueFrom(row);
     }
 
     public Object getValueFrom(Object row) {
