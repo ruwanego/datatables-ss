@@ -130,16 +130,25 @@ public class ServerSideDataTable {
             return this;
         }
 
+        @Deprecated
+        public Builder idColumn(String name) {
+            dataTable.setIdColumnName(name);
+            return this;
+        }
+
+        @Deprecated
         public Builder column(Type type, String name) {
             dataTable.getColumns().add(new Column(type, name));
             return this;
         }
 
+        @Deprecated
         public Builder column(Type type, String name, ValueAccessor valueAccessor) {
             dataTable.getColumns().add(new Column(type, name, valueAccessor));
             return this;
         }
 
+        @Deprecated
         public Builder column(Type type, String name, DisplayConverter converter) {
             dataTable.getColumns().add(new Column(type, name, converter));
             return this;
