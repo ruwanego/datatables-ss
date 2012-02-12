@@ -39,6 +39,29 @@ public class JsonFormatterTest {
     }
 
     @Test
+    public void should_generate_id_numbers_for_rows() {
+        // given
+        RequestParams requestParams = mock(RequestParams.class);
+        stub(requestParams.getEcho()).toReturn(3);
+
+        List<Object> rowsToShow = Arrays.asList(new Object(), new Object(), new Object());
+
+        int totalRows = 20;
+        int displayRows = 10;
+
+        JsonFormatter formatter = new JsonFormatter(Arrays.asList((Column) new IdColumn("id", 1)), requestParams);
+
+        // when
+        String json = formatter.format(rowsToShow, totalRows, displayRows);
+
+        // then
+        assertThat(json).isEqualTo("{\"sEcho\":3," +
+                "\"iTotalRecords\":20," +
+                "\"iTotalDisplayRecords\":10," +
+                "\"aaData\":[[\"1\"],[\"2\"],[\"3\"]]}");
+    }
+
+    @Test
     public void should_use_display_value_for_generating_column_content() {
         // given
         RequestParams requestParams = mock(RequestParams.class);
