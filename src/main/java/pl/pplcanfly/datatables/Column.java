@@ -48,4 +48,16 @@ class Column {
         return valueAccessor;
     }
 
+    void setValueAccessor(ValueAccessor valueAccessor) {
+        this.valueAccessor = valueAccessor;
+    }
+
+    DisplayConverter getDisplayConverter() {
+        return formatter;
+    }
+
+    void setDisplayConverter(DisplayConverter converter) {
+        this.formatter = converter;
+    }
+
 }

@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import pl.pplcanfly.datatables.ServerSideDataTable.Builder;
 import pl.pplcanfly.datatables.accessors.ValueAccessor;
 import pl.pplcanfly.datatables.types.Type;
+import pl.pplcanfly.datatables.types.Types;
 
 public class ServerSideDataTable {
 
@@ -72,9 +74,37 @@ public class ServerSideDataTable {
 
     public static class Builder {
         private ServerSideDataTable dataTable;
+        private Column currentColumn;
 
         public Builder() {
             dataTable = new ServerSideDataTable();
+        }
+
+        public Builder idColumn(String name) {
+            dataTable.setIdColumnName(name);
+            return this;
+        }
+
+        public Builder text(String name) {
+            addCurrentIfExists();
+            currentColumn = new Column(Types.text(), name);
+            return this;
+        }
+
+        public Builder date(String name) {
+            addCurrentIfExists();
+            currentColumn = new Column(Types.date(), name);
+            return this;
+        }
+
+        public Builder displayedWith(DisplayConverter converter) {
+            currentColumn.setDisplayConverter(converter);
+            return this;
+        }
+
+        public Builder accessibleWith(ValueAccessor valueAccessor) {
+            currentColumn.setValueAccessor(valueAccessor);
+            return this;
         }
 
         public Builder column(Type type, String name) {
@@ -92,15 +122,16 @@ public class ServerSideDataTable {
             return this;
         }
 
-        public Builder idColumn(String name) {
-            dataTable.setIdColumnName(name);
-            return this;
-        }
-
         public ServerSideDataTable done() {
+            addCurrentIfExists();
             return dataTable;
         }
 
+        private void addCurrentIfExists() {
+            if (currentColumn != null) {
+                dataTable.getColumns().add(currentColumn);
+            }
+        }
     }
 
 }
