@@ -87,6 +87,11 @@ public class ServerSideDataTable {
             return this;
         }
 
+        public Builder column(Type type, String name, DisplayConverter converter) {
+            dataTable.getColumns().add(new Column(type, name, converter));
+            return this;
+        }
+
         public Builder idColumn(String name) {
             dataTable.setIdColumnName(name);
             return this;
