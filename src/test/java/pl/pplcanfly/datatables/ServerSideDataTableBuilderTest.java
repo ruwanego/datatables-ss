@@ -9,6 +9,7 @@ import pl.pplcanfly.datatables.types.BooleanType;
 import pl.pplcanfly.datatables.types.ComparableType;
 import pl.pplcanfly.datatables.types.DateType;
 import pl.pplcanfly.datatables.types.TextType;
+import pl.pplcanfly.datatables.types.Type;
 
 public class ServerSideDataTableBuilderTest {
 
@@ -37,6 +38,40 @@ public class ServerSideDataTableBuilderTest {
 
         assertThat(dataTable.getColumns().get(3).getName()).isEqualTo("bool");
         assertThat(dataTable.getColumns().get(3).getType()).isInstanceOf(BooleanType.class);
+    }
+
+
+    @Test
+    public void should_allow_to_define_type() {
+        // given
+        Type textType = new Type() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return 0;
+            }
+        };
+
+        Type dateType = new Type() {
+            @Override
+            public int compare(Object o1, Object o2) {
+                return 0;
+            }
+        };
+
+        // when
+        ServerSideDataTable dataTable = ServerSideDataTable.build()
+                .column("custom_text").withType(textType)
+                .column("custom_date").withType(dateType)
+                .done();
+
+        // then
+        assertThat(dataTable.getColumns()).hasSize(2);
+
+        assertThat(dataTable.getColumns().get(0).getName()).isEqualTo("custom_text");
+        assertThat(dataTable.getColumns().get(0).getType()).isSameAs(textType);
+
+        assertThat(dataTable.getColumns().get(1).getName()).isEqualTo("custom_date");
+        assertThat(dataTable.getColumns().get(1).getType()).isSameAs(dateType);
     }
 
     @Test

@@ -10,6 +10,11 @@ class Column {
     private ValueAccessor valueAccessor;
     private DisplayConverter formatter;
 
+    public Column(String name) {
+        this.name = name;
+        this.valueAccessor = new ReflectionValueAccessor(name);
+    }
+
     public Column(Type type, String name) {
         this(type, name, new ReflectionValueAccessor(name));
     }
@@ -25,14 +30,6 @@ class Column {
         this.valueAccessor = valueAccessor;
     }
 
-    public Type getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public Object getDisplayValueFrom(Object row) {
         if (formatter != null) {
             return formatter.convert(valueAccessor.getValueFrom(row));
@@ -42,6 +39,18 @@ class Column {
 
     public Object getValueFrom(Object row) {
         return valueAccessor.getValueFrom(row);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    Type getType() {
+        return type;
+    }
+
+    void setType(Type type) {
+        this.type = type;
     }
 
     ValueAccessor getValueAccessor() {
@@ -59,5 +68,4 @@ class Column {
     void setDisplayConverter(DisplayConverter converter) {
         this.formatter = converter;
     }
-
 }

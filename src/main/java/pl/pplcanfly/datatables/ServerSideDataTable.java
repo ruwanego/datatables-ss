@@ -109,6 +109,11 @@ public class ServerSideDataTable {
             return this;
         }
 
+        public Builder withType(Type type) {
+            currentColumn.setType(type);
+            return this;
+        }
+
         public Builder displayedWith(DisplayConverter converter) {
             currentColumn.setDisplayConverter(converter);
             return this;
@@ -116,6 +121,12 @@ public class ServerSideDataTable {
 
         public Builder accessibleWith(ValueAccessor valueAccessor) {
             currentColumn.setValueAccessor(valueAccessor);
+            return this;
+        }
+
+        public Builder column(String name) {
+            addCurrentIfExists();
+            currentColumn = new Column(name);
             return this;
         }
 
@@ -144,6 +155,7 @@ public class ServerSideDataTable {
                 dataTable.getColumns().add(currentColumn);
             }
         }
+
 
     }
 
