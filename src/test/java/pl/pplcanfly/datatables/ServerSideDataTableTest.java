@@ -59,7 +59,7 @@ public class ServerSideDataTableTest {
     @Test
     public void should_allow_to_define_id_column() {
         ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .idColumn("id")
+                .id("id")
                 .done();
 
         // when
@@ -76,7 +76,7 @@ public class ServerSideDataTableTest {
         // when
         ServerSideDataTable dataTable = ServerSideDataTable.build()
                 .column(null, "col1")
-                .idColumn("id")
+                .id("id")
                 .done();
 
         // when
@@ -96,7 +96,7 @@ public class ServerSideDataTableTest {
     public void should_throw_eception_if_column_was_not_found() {
         // given
         ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .idColumn("id")
+                .id("id")
                 .column(null, "col1")
                 .column(null, "col2")
                 .done();

@@ -80,7 +80,7 @@ public class ServerSideDataTable {
             dataTable = new ServerSideDataTable();
         }
 
-        public Builder idColumn(String name) {
+        public Builder id(String name) {
             dataTable.setIdColumnName(name);
             return this;
         }
@@ -94,6 +94,18 @@ public class ServerSideDataTable {
         public Builder date(String name) {
             addCurrentIfExists();
             currentColumn = new Column(Types.date(), name);
+            return this;
+        }
+
+        public Builder numeric(String name) {
+            addCurrentIfExists();
+            currentColumn = new Column(Types.numeric(), name);
+            return this;
+        }
+
+        public Builder bool(String name) {
+            addCurrentIfExists();
+            currentColumn = new Column(Types.bool(), name);
             return this;
         }
 
@@ -132,6 +144,7 @@ public class ServerSideDataTable {
                 dataTable.getColumns().add(currentColumn);
             }
         }
+
     }
 
 }
