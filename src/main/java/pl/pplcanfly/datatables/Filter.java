@@ -33,7 +33,7 @@ class Filter implements RowsProcessor {
                 for (Column column : columns) {
                     String columnValue = "";
 
-                    Object value = column.getValueFrom(row);
+                    Object value = column.getDisplayValueFrom(row);
                     if (value != null) {
                         columnValue = value.toString();
                     }
