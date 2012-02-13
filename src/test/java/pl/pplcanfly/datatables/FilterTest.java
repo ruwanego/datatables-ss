@@ -11,8 +11,6 @@ import org.junit.Test;
 import pl.pplcanfly.datatables.types.Types;
 import pl.pplcanfly.datatables.utils.TestUtils;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
-
 public class FilterTest {
     private Column fooColumn = new Column(Types.text(), "foo");
     private Column barColumn = new Column(Types.numeric(), "bar");
