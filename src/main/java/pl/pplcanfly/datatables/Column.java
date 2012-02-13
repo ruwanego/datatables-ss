@@ -9,6 +9,7 @@ class Column {
     private String name;
     private ValueAccessor valueAccessor;
     private DisplayConverter displayConverter;
+    private SortBy sortBy = SortBy.MODEL_VALUE;
 
     public Column(String name) {
         this.name = name;
@@ -24,6 +25,12 @@ class Column {
         this.displayConverter = converter;
     }
 
+    public Column(Type type, String name, DisplayConverter converter, SortBy sortBy) {
+        this(type, name, new ReflectionValueAccessor(name));
+        this.displayConverter = converter;
+        this.sortBy = sortBy;
+    }
+
     public Column(Type type, String name, ValueAccessor valueAccessor) {
         this.type = type;
         this.name = name;
@@ -31,7 +38,14 @@ class Column {
     }
 
     public int compareValues(Object o1, Object o2) {
-        return type.compare(getValueFrom(o1), getValueFrom(o2));
+        switch (sortBy) {
+        case MODEL_VALUE:
+            return type.compare(getValueFrom(o1), getValueFrom(o2));
+        case DISPLAY_VALUE:
+            return type.compare(getDisplayValueFrom(o1), getDisplayValueFrom(o2));
+        default:
+            throw new IllegalStateException("unknown option");
+        }
     }
 
     public Object getDisplayValueFrom(Object row) {
