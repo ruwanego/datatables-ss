@@ -132,10 +132,10 @@ public class RowComparatorTest {
         comparator1.append(comparator4);
 
         // then
-        assertThat(comparator1.getNext()).isSameAs(comparator2);
-        assertThat(comparator2.getNext()).isSameAs(comparator3);
-        assertThat(comparator3.getNext()).isSameAs(comparator4);
-        assertThat(comparator4.getNext()).isNull();
+        assertThat(comparator1.getNextComparator()).isSameAs(comparator2);
+        assertThat(comparator2.getNextComparator()).isSameAs(comparator3);
+        assertThat(comparator3.getNextComparator()).isSameAs(comparator4);
+        assertThat(comparator4.getNextComparator()).isNull();
     }
 
     private List<Object> toList(Object... objects) {

@@ -8,7 +8,7 @@ class RowComparator implements Comparator<Object> {
     private Column column;
     private SortOrder sortOrder;
 
-    private RowComparator next;
+    private RowComparator nextComparator;
 
     public RowComparator(Column column, SortOrder sortOrder) {
         this.column = column;
@@ -36,26 +36,26 @@ class RowComparator implements Comparator<Object> {
         int comparisonResult = column.compareValues(o1, o2);
 
         if (comparisonResult == 0) {
-            return hasNextAppended() ? next.compare(o1, o2) : comparisonResult;
+            return hasNextComparatorAppended() ? nextComparator.compare(o1, o2) : comparisonResult;
         }
 
         return sortOrder.applyTo(comparisonResult);
     }
 
     void append(RowComparator rowComparator) {
-        if (hasNextAppended()) {
-            next.append(rowComparator);
+        if (hasNextComparatorAppended()) {
+            nextComparator.append(rowComparator);
         } else {
-            next = rowComparator;
+            nextComparator = rowComparator;
         }
     }
 
-    RowComparator getNext() {
-        return next;
+    RowComparator getNextComparator() {
+        return nextComparator;
     }
 
-    private boolean hasNextAppended() {
-        return next != null;
+    private boolean hasNextComparatorAppended() {
+        return nextComparator != null;
     }
 
 }
