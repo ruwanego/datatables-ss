@@ -11,6 +11,8 @@ import org.junit.Test;
 import pl.pplcanfly.datatables.types.Types;
 import pl.pplcanfly.datatables.utils.TestUtils;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type;
+
 public class FilterTest {
     private Column fooColumn = new Column(Types.text(), "foo");
     private Column barColumn = new Column(Types.numeric(), "bar");
@@ -140,6 +142,25 @@ public class FilterTest {
 
         // then
         assertThat(processedRows).hasSize(1).onProperty("foo").containsExactly("-.*?/#"); // only one should be filtered
+    }
+
+    @Test
+    public void should_use_display_value_when_filtering() {
+        // given
+        List<Something> rows = Arrays.asList(new Something("fooo", 12345));
+        Column column = new Column(Types.text(), "foo", new DisplayConverter() {
+			@Override
+			public String convert(Object value) {
+				return "bar"; // simply replaces all model values
+			}
+		});
+        Filter filter = new Filter(Arrays.asList(column), "bar");
+
+        // when
+        List<?> processedRows = filter.process(rows);
+
+        // then
+        assertThat(processedRows).hasSize(1).onProperty("foo").containsExactly("fooo");
     }
 
 }
