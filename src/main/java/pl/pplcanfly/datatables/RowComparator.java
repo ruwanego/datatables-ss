@@ -33,7 +33,7 @@ class RowComparator implements Comparator<Object> {
 
     @Override
     public int compare(Object o1, Object o2) {
-        int comparisonResult = column.getType().compare(column.getValueFrom(o1), column.getValueFrom(o2));
+        int comparisonResult = column.compareValues(o1, o2);
 
         if (comparisonResult == 0) {
             return hasNextAppended() ? next.compare(o1, o2) : comparisonResult;

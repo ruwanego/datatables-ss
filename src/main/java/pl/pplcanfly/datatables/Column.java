@@ -30,6 +30,10 @@ class Column {
         this.valueAccessor = valueAccessor;
     }
 
+    public int compareValues(Object o1, Object o2) {
+        return type.compare(getValueFrom(o1), getValueFrom(o2));
+    }
+
     public Object getDisplayValueFrom(Object row) {
         if (formatter != null) {
             return formatter.convert(valueAccessor.getValueFrom(row));
