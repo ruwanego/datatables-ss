@@ -18,7 +18,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InOrder;
 
-import pl.pplcanfly.datatables.types.Types;
 import pl.pplcanfly.datatables.utils.TestUtils;
 
 public class DataTablesRequestTest {
@@ -33,8 +32,8 @@ public class DataTablesRequestTest {
     @Before
     public void setUp() {
         ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .column(Types.text(), "foo")
-                .column(Types.numeric(), "bar")
+                .text("foo")
+                .numeric("bar")
                 .done();
 
         params = mock(RequestParams.class);

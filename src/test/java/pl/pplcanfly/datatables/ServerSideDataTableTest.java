@@ -26,7 +26,7 @@ public class ServerSideDataTableTest {
         };
 
         ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .column(type, "col")
+                .column("col").withType(type)
                 .done();
 
         // when
@@ -42,9 +42,9 @@ public class ServerSideDataTableTest {
     public void should_retrieve_columns_with_specific_names() {
         // when
         ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .column(null, "col1")
-                .column(null, "col2")
-                .column(null, "col3")
+                .column("col1")
+                .column("col2")
+                .column("col3")
                 .done();
 
         // when
@@ -75,7 +75,7 @@ public class ServerSideDataTableTest {
     public void should_retrieve_columns_including_id_column_for_formatting() {
         // when
         ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .column(null, "col1")
+                .column("col1")
                 .id("id")
                 .done();
 
@@ -97,8 +97,8 @@ public class ServerSideDataTableTest {
         // given
         ServerSideDataTable dataTable = ServerSideDataTable.build()
                 .id("id")
-                .column(null, "col1")
-                .column(null, "col2")
+                .column("col1")
+                .column("col2")
                 .done();
 
         thrown.expect(ColumnNotFoundException.class);

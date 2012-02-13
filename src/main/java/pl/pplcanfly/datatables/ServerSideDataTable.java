@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
-import pl.pplcanfly.datatables.ServerSideDataTable.Builder;
 import pl.pplcanfly.datatables.accessors.ValueAccessor;
 import pl.pplcanfly.datatables.types.Type;
 import pl.pplcanfly.datatables.types.Types;

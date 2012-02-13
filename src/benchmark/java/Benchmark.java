@@ -14,7 +14,6 @@ import java.util.Random;
 import pl.pplcanfly.datatables.DataTablesRequest;
 import pl.pplcanfly.datatables.ServerSideDataTable;
 import pl.pplcanfly.datatables.accessors.ValueAccessor;
-import pl.pplcanfly.datatables.types.Types;
 
 class Benchmark {
     private static List<ExampleRow> rows = new ArrayList<ExampleRow>();
@@ -95,20 +94,20 @@ class Benchmark {
 
     private static void initializeTableAllByReflection() {
         dataTable = ServerSideDataTable.build()
-                .column(Types.text(), "first")
-                .column(Types.text(), "second")
+                .text("first")
+                .text("second")
                 .done();
     }
 
     private static void initializeTableWithCustom() {
         dataTable = ServerSideDataTable.build()
-                .column(Types.text(), "first", new ValueAccessor() {
+                .text("first").accessibleWith(new ValueAccessor() {
                     @Override
                     public Object getValueFrom(Object obj) {
                         return ((ExampleRow) obj).getFirst();
                     }
                 })
-                .column(Types.text(), "second")
+                .text("second")
                 .done();
     }
 
