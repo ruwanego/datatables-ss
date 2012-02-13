@@ -123,6 +123,16 @@ public class ServerSideDataTable {
             return this;
         }
 
+        public Builder sortedByModelValue() {
+            currentColumn.setSortBy(SortBy.MODEL_VALUE);
+            return this;
+        }
+
+        public Builder sortedByDisplayValue() {
+            currentColumn.setSortBy(SortBy.DISPLAY_VALUE);
+            return this;
+        }
+
         public Builder column(String name) {
             addCurrentIfExists();
             currentColumn = new Column(name);
@@ -163,7 +173,6 @@ public class ServerSideDataTable {
                 dataTable.getColumns().add(currentColumn);
             }
         }
-
 
     }
 

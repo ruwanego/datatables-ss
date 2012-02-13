@@ -152,4 +152,22 @@ public class ServerSideDataTableBuilderTest {
         assertThat(dataTable.getColumns().get(1).getValueAccessor()).isSameAs(dateAccessor);
     }
 
+    @Test
+    public void should_allow_to_define_sort_by_value() {
+        // when
+        ServerSideDataTable dataTable = ServerSideDataTable.build()
+                .text("text").sortedByModelValue()
+                .date("date").sortedByDisplayValue()
+                .done();
+
+        // then
+        assertThat(dataTable.getColumns()).hasSize(2);
+
+        assertThat(dataTable.getColumns().get(0).getName()).isEqualTo("text");
+        assertThat(dataTable.getColumns().get(0).getSortBy()).isEqualTo(SortBy.MODEL_VALUE);
+
+        assertThat(dataTable.getColumns().get(1).getName()).isEqualTo("date");
+        assertThat(dataTable.getColumns().get(1).getSortBy()).isEqualTo(SortBy.DISPLAY_VALUE);
+    }
+
 }

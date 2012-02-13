@@ -86,4 +86,12 @@ class Column {
     void setDisplayConverter(DisplayConverter converter) {
         this.displayConverter = converter;
     }
+
+    void setSortBy(SortBy sortBy) {
+        this.sortBy = sortBy;
+    }
+
+    SortBy getSortBy() {
+        return sortBy;
+    }
 }
