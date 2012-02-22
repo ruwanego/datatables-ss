@@ -47,7 +47,11 @@ public class RequestParams {
         List<String> columns = getColumns();
         List<String> sortingColumns = new ArrayList<String>();
         for (int i = 0; i < getSortingColsCount(); i++) {
-            sortingColumns.add(columns.get(Integer.parseInt(getParam("iSortCol_" + i))));
+            int columnNumber = Integer.parseInt(getParam("iSortCol_" + i));
+            boolean sortable = Boolean.parseBoolean(getParam("bSortable_" + columnNumber));
+            if (sortable) {
+                sortingColumns.add(columns.get(columnNumber));
+            }
         }
         return sortingColumns;
     }
