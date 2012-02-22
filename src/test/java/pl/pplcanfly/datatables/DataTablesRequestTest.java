@@ -96,7 +96,7 @@ public class DataTablesRequestTest {
         DataTablesResponse response = request.process(rows);
 
         // then
-        assertThat(response.getProcessedRows()).isEqualTo(processed);
+        assertThat(response.getProcessedRows()).isEqualTo(limited);
         assertThat(response.toJson()).isEqualTo("json");
 
         verify(formatter).format(eq(limited), eq(rows.size()), eq(processed.size()));
