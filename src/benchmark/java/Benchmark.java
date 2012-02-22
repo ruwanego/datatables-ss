@@ -122,6 +122,8 @@ class Benchmark {
         params.put("iSortingCols", new String[] { "1" });
         params.put("iSortCol_0", new String[] { "0" });
         params.put("sSortDir_0", new String[] { "asc" });
+        params.put("bSortable_0", new String[] { "true" });
+        params.put("bSortable_1", new String[] { "true" });
 
         params.put("sSearch", new String[] { "a" });
         params.put("bSearchable_0", new String[]{"true"});
