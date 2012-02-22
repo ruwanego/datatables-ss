@@ -87,6 +87,22 @@ public class RequestParamsTest {
     }
 
     @Test
+    public void should_handle_case_when_there_are_no_sort_params() {
+        // "bSort: false" option completely turns off sort params
+
+        // given
+        Map<String, String[]> params = new HashMap<String, String[]>();
+
+        params.put("sColumns", new String[]{"col1,col2,col3"});
+
+        // when
+        RequestParams request = new RequestParams(params);
+
+        // then
+        assertThat(request.getSortCols()).isEmpty();
+    }
+
+    @Test
     public void should_parse_search_params() {
         // given
         Map<String, String[]> params = new HashMap<String, String[]>();

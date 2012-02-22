@@ -16,14 +16,14 @@ public class RequestParams {
      * @return sEcho, casted to int due to security reasons (XSS attacks)
      */
     public int getEcho() {
-        return Integer.parseInt(getParam("sEcho"));
+        return getNumericParam("sEcho");
     }
 
     /**
      * @return iDisplayStart
      */
     public int getDisplayStart() {
-        return Integer.parseInt(getParam("iDisplayStart"));
+        return getNumericParam("iDisplayStart");
     }
 
     /**
@@ -37,7 +37,7 @@ public class RequestParams {
      * @return iSortingCols
      */
     public int getSortingColsCount() {
-        return Integer.parseInt(getParam("iSortingCols"));
+        return getNumericParam("iSortingCols");
     }
 
     /**
@@ -47,7 +47,7 @@ public class RequestParams {
         List<String> columns = getColumns();
         List<String> sortingColumns = new ArrayList<String>();
         for (int i = 0; i < getSortingColsCount(); i++) {
-            int columnNumber = Integer.parseInt(getParam("iSortCol_" + i));
+            int columnNumber = getNumericParam("iSortCol_" + i);
             boolean sortable = Boolean.parseBoolean(getParam("bSortable_" + columnNumber));
             if (sortable) {
                 sortingColumns.add(columns.get(columnNumber));
@@ -71,7 +71,7 @@ public class RequestParams {
      * @return iDisplayLength
      */
     public int getDisplayLength() {
-        return Integer.parseInt(getParam("iDisplayLength"));
+        return getNumericParam("iDisplayLength");
     }
 
     /**
@@ -99,7 +99,13 @@ public class RequestParams {
     }
 
     private String getParam(String key) {
-        return params.get(key)[0];
+        String[] values = params.get(key);
+        return values != null ? values[0] : "";
+    }
+
+    private int getNumericParam(String key) {
+        String[] values = params.get(key);
+        return values != null ? Integer.parseInt(values[0]) : 0;
     }
 
 }
