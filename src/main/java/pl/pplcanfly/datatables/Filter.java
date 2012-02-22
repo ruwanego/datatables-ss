@@ -21,6 +21,10 @@ class Filter implements RowsProcessor {
             return rows;
         }
 
+        if (search.trim().isEmpty()) {
+            return rows;
+        }
+
         List<Object> filteredRows = new ArrayList<Object>();
         List<Pattern> patterns = precompile();
 
