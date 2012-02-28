@@ -32,7 +32,7 @@ public class DataTablesRequest {
 
         String json = formatter.format(limited, rows.size(), processed.size());
 
-        return new DataTablesResponse(limited, json);
+        return new DataTablesResponse(processed, limited, json);
     }
 
     void setSorter(RowsProcessor sorter) {
