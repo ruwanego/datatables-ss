@@ -21,7 +21,7 @@ class Filter implements RowsProcessor {
             return rows;
         }
 
-        if (search.trim().isEmpty()) {
+        if (("").equals(search.trim())) {
             return rows;
         }
 
