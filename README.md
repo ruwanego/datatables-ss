@@ -23,7 +23,7 @@ Server side processing for [datatables](http://datatables.net/).
             $('#example').dataTable({
                 "aoColumns": [
                   {sName: "engine"},
-                  {sName: 'browser'},
+                  {sName: "browser"},
                   {sName: "version"},
                   {sName: "platform"},
                   {sName: "grade"} ],
@@ -31,6 +31,8 @@ Server side processing for [datatables](http://datatables.net/).
                 "sAjaxSource": "ExampleServlet"
             });
         });
+        
+Keep in mind that sName values must exactly match column names set in object of *ServerSideDataTable* class (ExampleServlet.java).
 
 ###Add ExampleServlet mappings to *web.xml*:
 
@@ -46,24 +48,19 @@ Server side processing for [datatables](http://datatables.net/).
 
 ###Create ExampleServlet.java to handle datatable POST action:
         public class HelloServlet extends HttpServlet {
-            private static ServerSideDataTable dataTable;
-
-            static {
-                dataTable = ServerSideDataTable.build()
-                                .column(Types.text(), "engine")
-                                .column(Types.text(), "browser")
-                                .column(Types.text(), "platform")
-                                .column(Types.numeric(), "version")
-                                .column(Types.text(), "grade")
-                                .done();
-
-            public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException,
-                    ServletException {
-                doGet(req, resp);
-            }
+             
+            private static ServerSideDataTable dataTable = ServerSideDataTable.build()
+                .text("engine")
+                .text("browser")
+                .text("platform")
+                .numeric("version")
+                .text("grade")
+                .done();
 
             public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
                     IOException {
+                List<ExampleRow> rows = DataSource.loadAll();
+                
                 DataTablesRequest dataTablesRequest = new DataTablesRequest(req.getParameterMap(), dataTable);
                 DataTablesResponse dataTablesResponse = dataTablesRequest.process(rows);
                 resp.getWriter().write(dataTablesResponse.toJson());
@@ -71,5 +68,23 @@ Server side processing for [datatables](http://datatables.net/).
 
         }
 
+In this case datatables-ss uses reflection to get values. Objects of class ExampleRow are simple POJOs with *getEngine*, *getBrowser* getters. In next section you'll see how to make more customized configuration.
 
-... to be continued ...
+##ServerSideDataTable configuration
+###Column types
+datatables-ss supports couple of column types out of box:
+
+* text
+* numeric
+* date
+* bool
+
+There's also one special column type *id*. It auto-generates index value when table is being displayed on screen.
+All column definitions require column name parameter which corresponds to getter method in model object:
+
+        ServerSideDataTable.build().id("idCol").text("textCol").numeric("numericCol").date("dateCol").bool("boolCol").done();
+
+###Custom column types
+###Value accessors
+###Display converters
+###Sorting by model/display
