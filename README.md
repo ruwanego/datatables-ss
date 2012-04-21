@@ -50,11 +50,11 @@ Keep in mind that sName values must exactly match column names set in object of 
         public class HelloServlet extends HttpServlet {
              
             private static ServerSideDataTable dataTable = ServerSideDataTable.build()
-                .text("engine")
-                .text("browser")
-                .text("platform")
-                .numeric("version")
-                .text("grade")
+                    .text("engine")
+                    .text("browser")
+                    .text("platform")
+                    .numeric("version")
+                    .text("grade")
                 .done();
 
             public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,
@@ -82,9 +82,45 @@ datatables-ss supports couple of column types out of box:
 There's also one special column type *id*. It auto-generates index value when table is being displayed on screen.
 All column definitions require column name parameter which corresponds to getter method in model object:
 
-        ServerSideDataTable.build().id("idCol").text("textCol").numeric("numericCol").date("dateCol").bool("boolCol").done();
+        ServerSideDataTable.build()
+                .id("id") // getId()
+                .text("text") // getText()
+                .numeric("numeric") // getNumeric()
+                .date("date") // getDate()
+                .bool("bool") // getBool()
+            .done();
+            
+
+###Value accessors
+Reflection is not the only way how datatables-ss can access data. You may also define specific ValueAccessor for cases when your object has no valid bean getter etc.
+
+        .column("size").accessibleWith(new ValueAccessor() {
+          public Object getValueFrom(Object model) {
+            return ((ExampleRow) model).size();
+          }
+        })
 
 ###Custom column types
-###Value accessors
+
+        .column("").withType(new Type() {
+          public int compare(Object o1, Object o2) {
+            return 0;
+          }
+        })
+
 ###Display converters
+
+        .column("").displayedWith(new DisplayConverter() {
+          public String convert(Object arg) {
+            return arg == null ? "none" : arg.toString();
+          }
+        })
+
+
 ###Sorting by model/display
+    
+        .text("").sortedByDisplayValue()
+        .date("").sortedByModelValue()
+        
+        
+... t.b.c ...
