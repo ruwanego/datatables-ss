@@ -2,12 +2,12 @@ package pl.pplcanfly.datatables;
 
 import java.util.List;
 
-class Limiter implements RowsProcessor {
+class Pager implements RowsProcessor {
 
     private int displayStart;
     private int displayLength;
 
-    public Limiter(int displayStart, int displayLength) {
+    public Pager(int displayStart, int displayLength) {
         this.displayStart = displayStart;
         this.displayLength = displayLength;
     }

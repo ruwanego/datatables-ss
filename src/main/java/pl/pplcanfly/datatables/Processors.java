@@ -11,7 +11,7 @@ final class Processors {
         return new Sorter(dataTable.getColumns(params.getSortCols()), SortOrder.toEnumList(params.getSortDirs()));
     }
 
-    public static RowsProcessor limiter(ServerSideDataTable dataTable, RequestParams params) {
-        return new Limiter(params.getDisplayStart(), params.getDisplayLength());
+    public static RowsProcessor pager(ServerSideDataTable dataTable, RequestParams params) {
+        return new Pager(params.getDisplayStart(), params.getDisplayLength());
     }
 }

@@ -8,7 +8,7 @@ public class DataTablesRequest {
 
     private RowsProcessor sorter;
     private RowsProcessor filter;
-    private RowsProcessor limiter;
+    private RowsProcessor pager;
     private Formatter formatter;
 
     public DataTablesRequest(Map<String, String[]> params, ServerSideDataTable dataTable) {
@@ -18,7 +18,7 @@ public class DataTablesRequest {
     DataTablesRequest(RequestParams params, ServerSideDataTable dataTable) {
         this.filter = Processors.filter(dataTable, params);
         this.sorter = Processors.sorter(dataTable, params);
-        this.limiter = Processors.limiter(dataTable, params);
+        this.pager = Processors.pager(dataTable, params);
 
         this.formatter = new JsonFormatter(dataTable.getColumns(params.getColumns(), params.getDisplayStart() + 1), params);
     }
@@ -28,11 +28,11 @@ public class DataTablesRequest {
 
         processed = filter.process(processed);
         processed = sorter.process(processed);
-        List<?> limited = limiter.process(processed);
+        List<?> paged = pager.process(processed);
 
-        String json = formatter.format(limited, rows.size(), processed.size());
+        String json = formatter.format(paged, rows.size(), processed.size());
 
-        return new DataTablesResponse(processed, limited, json);
+        return new DataTablesResponse(processed, paged, json);
     }
 
     void setSorter(RowsProcessor sorter) {
@@ -43,8 +43,8 @@ public class DataTablesRequest {
         this.filter = filter;
     }
 
-    void setLimiter(RowsProcessor limiter) {
-        this.limiter = limiter;
+    void setPager(RowsProcessor pager) {
+        this.pager = pager;
     }
 
     void setFormatter(Formatter formatter) {

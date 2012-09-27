@@ -42,13 +42,13 @@ public class DataTablesRequestTest {
 
         sorter = mock(Sorter.class);
         filter = mock(Filter.class);
-        limiter = mock(Limiter.class);
+        limiter = mock(Pager.class);
         formatter = mock(Formatter.class);
 
         request = new DataTablesRequest(params, dataTable);
         request.setSorter(sorter);
         request.setFilter(filter);
-        request.setLimiter(limiter);
+        request.setPager(limiter);
 
         request.setFormatter(formatter);
     }

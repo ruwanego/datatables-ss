@@ -15,7 +15,7 @@ public class LimiterTest {
         // given
         List<Something> rows = TestUtils.load("1");
 
-        Limiter limiter = new Limiter(1, 2);
+        Pager limiter = new Pager(1, 2);
 
         // when
         List<?> processed = limiter.process(rows);
