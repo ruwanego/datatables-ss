@@ -3,6 +3,8 @@ package pl.pplcanfly.datatables;
 import java.util.List;
 
 class Pager implements RowsProcessor {
+    
+    public static final int ALL_ROWS = -1;
 
     private int displayStart;
     private int displayLength;
@@ -14,7 +16,9 @@ class Pager implements RowsProcessor {
 
     @Override
     public List<?> process(List<?> rows) {
-        return rows.subList(displayStart, Math.min(rows.size(), displayStart + displayLength));
+        int max = (displayLength == ALL_ROWS) ? rows.size() : Math.min(rows.size(), displayStart
+                + displayLength);
+        return rows.subList(displayStart, max);
     }
 
 }
